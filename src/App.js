@@ -1,8 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import FormCode from './components/FormCode';
 import SimpleForm from './components/SimpleForm';
+import Menu from './components/Menu';
+
+import { Switch, Route, BrowserRouter} from 'react-router-dom';
 
 function App() {
 
@@ -11,12 +13,20 @@ function App() {
     console.log(values);
   }
   return (
+    <BrowserRouter>
     <div className="App">
-        <h3 className="jumbotron">Redux Form Validation</h3>
-        <FormCode onSubmit={submit} />
-        <hr></hr>
-        <SimpleForm/>
+        <Menu></Menu>
+        <Switch>
+          <Route exact path="/">
+              <FormCode onSubmit={submit} />
+          </Route>
+          <Route path="/simple-form">
+              <SimpleForm/>    
+          </Route>
+        
+        </Switch>
     </div>
+    </BrowserRouter>
   );
 }
 

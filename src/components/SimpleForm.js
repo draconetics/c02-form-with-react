@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+var FA = require('react-fontawesome')
 
 let SimpleForm = ()=>{
 
@@ -13,43 +14,47 @@ let SimpleForm = ()=>{
         setEmail(inputInit);
     }
 
-    const validateName = ()=>{
-        if (firstName.touched && firstName.value.length < 3)
-            return "First Name should be >= 3 characters";
-        else if (firstName.touched && firstName.value.length > 10)
+    const validateName = (first_name)=>{
+        if (firstName.touched && first_name.length <= 3)
+            return "First Name should be > 3 characters";
+        else if (firstName.touched && first_name.length > 10)
             return "First Name should be <= 10 characters";
         return "";
     }
 
-    const validateLastName = ()=>{
-        if (lastName.touched && lastName.value.length < 3)
+    const validateLastName = (last_name)=>{
+        if (lastName.touched && last_name.length < 3)
             return 'Last Name should be >= 3 characters';
-        else if (lastName.touched && lastName.value.length > 10)
+        else if (lastName.touched && last_name.length > 10)
             return 'Last Name should be <= 10 characters';
 
         return "";
     }
 
-    const validateEmail = () =>{
-        if (email.touched && email.value.split('').filter(x => x === '@').length !== 1)
+    const validateEmail = (_email) =>{
+        if (email.touched && !_email.includes("@")){
             return 'Email should contain a @';
+        }
         return "";
     }
 
     const handleOnChange = (e) =>{
         let error = "";
-        switch(e.target.name){
+        console.log(e.target.value, e.target.value.length)
+        const inputName = e.target.name;
+        const inputValue = e.target.value;
+        switch(inputName){
             case "firstName":
-                error = validateName();
-                setFirstName({...firstName, value:e.target.value, error })
+                error = validateName(inputValue);
+                setFirstName({...firstName, value:inputValue, error })
                 break;
             case "lastName":
-                error = validateLastName();
-                setLastName({...lastName, value:e.target.value, error})
+                error = validateLastName(inputValue);
+                setLastName({...lastName, value:inputValue, error})
                 break;
             case "email":
-                error = validateEmail();
-                setEmail({...email, value:e.target.value, error})
+                error = validateEmail(inputValue);
+                setEmail({...email, value:inputValue, error})
                 break;
             default:
         }
@@ -74,14 +79,28 @@ let SimpleForm = ()=>{
         return (firstName.error === '' && lastName.error === '' && email.error === '')?"":"disabled"
     }
 
+    const getMessage = (inputName) =>{
+        if(inputName.touched && inputName.error != null && inputName.error.length > 0)
+            return (<span className="text-danger">{inputName.error}</span>);
+        if(inputName.touched && inputName.error === ''){
+            console.log("correct!")
+            return (<span className="text-success">{"Correct!"}
+                        <FA className="thumbs-up-icon" name="thumbs-up" />
+                    </span>);
+        }
+            
+        return "*";
+    }
+
     return (
         <div>
-
-            <form>
-                <div>
-                    <label>First Name</label>
+            <form className="form-container">
+                <h3 >Simple Form Validation</h3>
+                <div className="form-group">
+                    <label>First Name({getMessage(firstName)})</label>
                     
                     <input 
+                            className="form-control"
                             type="text" 
                             name="firstName" 
                             value={firstName.value} 
@@ -89,12 +108,13 @@ let SimpleForm = ()=>{
                             placeholder="First Name"
                             onBlur={(e)=>onBlur(e)}>
                     </input>
-                   <span>{firstName.error}</span>
+                   
 
                 </div>
-                <div>
-                    <label>Last Name</label>
+                <div className="form-group">
+                    <label>Last Name({getMessage(lastName)})</label>
                     <input 
+                            className="form-control"
                             type="text" 
                             name="lastName" 
                             value={lastName.value} 
@@ -104,9 +124,10 @@ let SimpleForm = ()=>{
                     </input>
                     <span>{lastName.error}</span>
                 </div>
-                <div>
-                    <label>Email</label>
+                <div className="form-group">
+                    <label>Email({getMessage(email)})</label>
                     <input 
+                            className="form-control"
                             type="text" 
                             name="email" 
                             value={email.value} 
@@ -116,8 +137,11 @@ let SimpleForm = ()=>{
                     </input>
                     <span>{email.error}</span>
                 </div>
-                <button type="button" disabled={verifyForm()}>Submit</button>
-                <button type="button" onClick={()=>reset()}>Reset</button>
+                <div className="form-group">
+                    <button type="button" className={"btn btn--primary "+verifyForm()}>Submit</button>
+                    <button type="button" className="btn btn--secondary" onClick={()=>reset()}>Reset</button>
+                </div>
+                
             </form>
         </div>
     );
