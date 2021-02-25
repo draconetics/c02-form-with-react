@@ -1,10 +1,4 @@
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing: border-box;
-}
-
 ul{
    list-style: none;
 }
@@ -14,17 +8,16 @@ a{
   color: #000;
 }
 
-.btn, .form-control{
+.container{
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.btn, .form-input{
     border-radius: .3rem;
     padding: .5rem 1rem;
     width: 100%;
-    border: 1px solid #fff;
-}
-
-.form-control:focus{
-    outline:0;
-    border: 1px solid #a8dadc;
-    box-shadow: 0px 0px 2px 2px #a8dadc;
 }
 
 .btn{
@@ -32,6 +25,9 @@ a{
     cursor: pointer;
     border: 0;
 }
+.btn:focus{
+  outline: none;
+} 
 
 .btn.btn--secondary{
     background-color: #457b9d;
@@ -52,12 +48,8 @@ a{
   background-color: rgba(230, 57, 70, .5);
 }
 
-.btn.btn--primary.disabled{
-  pointer-events: none;
-}
-
 /****REACT FORM ****/
-
+/* 
 .form-container{
   background-color: #1d3557;
   max-width: 400px;
@@ -81,14 +73,13 @@ a{
 
 .text-danger{
   color: #e63946;
-  font-style: italic;
-  font-size: .9rem;
+  font-size: .75rem;
 }
 
 .text-success{
   color: #a8dadc;
   font-style: italic;
   font-size: .9rem;
-}
+} */
 
 /********* XXXXXX *********/

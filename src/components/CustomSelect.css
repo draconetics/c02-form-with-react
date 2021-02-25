@@ -1,0 +1,79 @@
+.custom-select{
+    border: 1px solid var(--gray);
+    padding: .5rem;
+    border-radius: 2px;
+    color: var(--secondary-light-color);
+    font-size: 1rem;
+    cursor: pointer;
+    position: relative;
+}
+
+.custom-select:hover{
+    border:1px solid var(--primary-color);
+}
+
+
+
+.custom-select__chosen{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.custom-select__chosen button {
+    position: relative;
+    z-index: 100;
+}
+
+.custom-select__chosen img,
+.custom-select__content li img{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.custom-select__content{
+    position: absolute;
+    top: 35px;
+    left: 0;
+    border:1px solid var(--gray);
+    width: 350px;
+}
+
+.custom-select__content .custom-select__searcher{
+    padding: .5rem;
+    width: 100%;
+    border: 1px solid var(--gray);
+    background-color: var(--white);
+}
+
+.custom-select__content .custom-select__searcher input{
+    padding: .5rem;
+    width: 100%;
+}
+
+.custom-select__content .custom-select__searcher input:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+.custom-select__content .custom-select__list{
+    height: 250px;
+    position: relative;
+    overflow-y: scroll;   
+    background-color: var(--white);
+}
+
+.custom-select__content li{
+    padding: .5rem;
+    display:flex;
+}
+.custom-select__content li span{
+    flex: 1;
+}
+.custom-select__content li:hover{
+    background-color: var(--gray-light);
+}
+
+.hidden{
+    display:none;
+}

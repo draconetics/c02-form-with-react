@@ -1,3 +1,28 @@
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+
+:root{
+  /* #fba70b */
+  --primary-color: rgb(251, 167, 11);
+  /* #191a20 */
+  --secondary-color: rgb(25, 26, 32);
+  /* #888 */
+  --secondary-light-color: rgb(136, 136, 136);
+  /* #007bff */
+  --info-color: rgb(0, 123, 255);
+  /* #f4813f */
+  --warning-color: rgb(244, 129, 63);
+  /* #f1556a */
+  --danger-color: rgb(241, 85, 106);
+  --white: rgb(255,255,255);
+  --gray: rgb(200,200,200);
+  --gray-light: #ececec;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

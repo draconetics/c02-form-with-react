@@ -1,0 +1,23 @@
+.home{
+    margin-top: 1rem;
+    padding: 1rem;
+    line-height: 2;
+    border: 1px solid var(--primary-color);
+}
+
+.home h1{
+    color: var(--primary-color);
+}
+
+.home svg{
+    color: var(--primary-color);
+    margin: 0 1rem;
+}
+
+.home a {
+    color: var(--secondary-light-color);
+}
+
+.home a:hover {
+    color: var(--warning-color);
+}
