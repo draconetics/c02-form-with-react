@@ -59,5 +59,10 @@
     background-color: var(--danger-color);
 }
 
-
-
+/******************************captcha*********************************/
+.manual-form-register__captcha{
+    width: 100%;
+    padding: 30px 0;
+    display:flex;
+    justify-content: center;
+}

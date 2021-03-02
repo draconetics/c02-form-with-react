@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
+import ReCAPTCHA from "react-google-recaptcha";
 import { nanoid } from 'nanoid';
 import { validate, validateEmail } from './util';
 
@@ -15,6 +16,7 @@ const ManualForm = () => {
   const [email, setEmail] = useState(inputInit);
   const [password01, setPassword01] = useState(inputInit);
   const [password02, setPassword02] = useState(inputInit);
+  const [captcha, setCaptcha] = useState(null);
   const [errorList, setErrorList] = useState([]);
 
   const handleOnChange = (e) => {
@@ -45,11 +47,9 @@ const ManualForm = () => {
         break;
       case 'password02': {
         error = validate('password', inputValue, 20, 5);
-        if(error === '') {
+        if (error === '') {
           error = (password01.value === inputValue) ? '' : 'Passwords do not match';
         }
-        console.log(password01.value + '  ' + inputValue);
-        console.log(error);
         setPassword02({ ...password02, value: inputValue, error });
         break;
       }
@@ -112,8 +112,11 @@ const ManualForm = () => {
     if (!email.value.trim()) list[3] = 'email required';
     if (!password01.value.trim()) list[4] = 'Password required';
     if (!password02.value.trim()) list[5] = 'Repeat password';
+    if (captcha === null) list.push('I am a robot');
     console.log(list);
-    if (list[0] || list[1] || list[2] || list[3] || list[4] || list[5]) {
+    if (list[0] || list[1] || list[2]
+      || list[3] || list[4] || list[5]
+      || list[6]) {
       setErrorList(list);
       return;
     }
@@ -125,6 +128,10 @@ const ManualForm = () => {
     console.log(password01);
     console.log(password02);
     alert('data sended!!');
+  };
+
+  const onChange = (value) => {
+    setCaptcha(value);
   };
 
   return (
@@ -184,6 +191,12 @@ const ManualForm = () => {
           onBlur={onBlur}
           getMessage={getMessage}
         />
+        <div className="manual-form-register__captcha">
+          <ReCAPTCHA
+            sitekey="6LeQy_USAAAAAITw-Z04eI_-GWy5StpO8daa3PRl"
+            onChange={onChange}
+          />
+        </div>
         <div className="message-are">
           {errorList
             && errorList.map((error) => {
