@@ -1,31 +1,41 @@
 /* eslint-disable class-methods-use-this */
-import React, { Component } from 'react';
+import React from 'react';
+import { NavLink, Route, Switch } from 'react-router-dom';
 import LoginForm from './LoginForm';
-
-import './Login.css';
 import LoginFormNumber from './LoginFormNumber';
 
-export default class Login extends Component {
-  render() {
-    return (
-      <div className="login">
-        <div className="login__container">
-          <div className="login__header">
-            <h3>Log In</h3>
-            <p>Please check that you are visiting the correct URL</p>
-            <div className="login__url">
-              <span>https://</span>
-              accounts.binance.com
-            </div>
-          </div>
-          <LoginFormNumber />
-          <div className="login__links">
-            <a href="#">Forgot Password?</a>
-            <a href="#">Scan to login</a>
-            <a href="#">Free registration</a>
+import './Login.css';
+
+export default function Login({ match }) {
+  return (
+    <div className="login">
+      <div className="login__container">
+        <div className="login__header">
+          <h3>Log In</h3>
+          <p>Please check that you are visiting the correct URL</p>
+          <div className="login__url">
+            <span>https://</span>
+            accounts.binance.com
           </div>
         </div>
+        <ul className="login__submenu">
+          <li><NavLink exact activeClassName="active" to="/login-form">Login</NavLink></li>
+          <li><NavLink exact activeClassName="active" to="/login-form/number">Number</NavLink></li>
+        </ul>
+        <Switch>
+          <Route path={match.url} exact component={LoginForm} />
+          <Route exact path={`${match.url}/number`} component={LoginFormNumber} />
+        </Switch>
+        <div className="login__links">
+          <a href="#">Forgot Password?</a>
+          <a href="#">Scan to login</a>
+          <a href="#">Free registration</a>
+        </div>
       </div>
-    );
-  }
+      <p className="login__clone">
+        clone of :
+        <a target="_target" href="https://accounts.binance.com/en/login?callback=">accounts.binance.com</a>
+      </p>
+    </div>
+  );
 }

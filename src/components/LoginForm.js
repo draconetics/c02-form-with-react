@@ -42,14 +42,14 @@ const renderField = ({
   input, label, type, meta: { touched, error },
 }) => (
   <>
-    <label className="control-label">
+    <label className="login-title">
       {label}
     </label>
     <input
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...input}
       type={type}
-      className={(error) ? 'form-input danger' : 'form-input'}
+      className={(error) ? 'login-input danger' : 'form-input'}
     />
     {getMessage(touched, error)}
   </>
@@ -81,7 +81,7 @@ let LoginForm = ({
         </a>
       </div>
       <div className="form-group">
-        <button type="submit" className="btn btn--primary">
+        <button type="submit" className="login-button">
           Log In
         </button>
       </div>

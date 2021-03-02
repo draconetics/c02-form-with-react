@@ -1,44 +1,9 @@
-import React, { useState } from 'react';
-import PhoneInput from 'react-phone-input-2';
-import Select from 'react-select';
+/* eslint-disable no-restricted-syntax */
+import React from 'react';
 import data from './data';
-
-import 'react-phone-input-2/lib/style.css';
-import './LoginFormNumber.css';
 import CustomSelect from './CustomSelect';
 
-// const URL = "https://purecatamphetamine.github.io/country-flag-icons/3x2/BO.svg"
-// const URL = 'https://purecatamphetamine.github.io/country-flag-icons/3x2/';
-const URL = './svgs/';
-/* const options = [
-  {
-    value: 'chocolate',
-    label: (
-      <div>
-        <img src={`${URL}BO.svg`} height="20px" width="20px" />
-        Chocolate{' '}
-      </div>
-    ),
-  },
-  {
-    value: 'strawberry',
-    label: (
-      <div>
-        <img src={`${URL}CA.svg`} height="20px" width="20px" />
-        strawberry{' '}
-      </div>
-    ),
-  },
-  {
-    value: 'vainilla',
-    label: (
-      <div>
-        <img src={`${URL}US.svg`} height="20px" width="20px" />
-        vainilla{' '}
-      </div>
-    ),
-  },
-]; */
+import './LoginFormNumber.css';
 
 export default class LoginFormNumber extends React.Component {
   constructor(props) {
@@ -50,6 +15,7 @@ export default class LoginFormNumber extends React.Component {
     };
     this.changePhone = this.changePhone.bind(this);
     this.setSelectedOption = this.setSelectedOption.bind(this);
+    this.sendForm = this.sendForm.bind(this);
   }
 
   componentDidMount() {
@@ -67,12 +33,11 @@ export default class LoginFormNumber extends React.Component {
       flex: '1',
     };
     for (const [key, value] of Object.entries(data)) {
-      /* console.log(`${key}: ${value}`); */
       const item = {
         value: value.name + value.code,
         label: (
           <div style={style}>
-            <img src={`${URL + key}.svg`} style={imageStyle} />
+            <img src={`${URL + key}.svg`} alt={value.name} style={imageStyle} />
             <p style={nameStyle}>{`${value.name} ${value.code}`}</p>
           </div>
         ),
@@ -91,34 +56,34 @@ export default class LoginFormNumber extends React.Component {
   }
 
   changePhone(phone) {
-    this.setState({
-      ...this.state,
-      phone,
-    });
+    this.setState(
+      (prev) => ({
+        ...prev,
+        phone,
+      }),
+    );
+  }
+
+  sendForm(e) {
+    e.preventDefault();
+    alert('send data');
   }
 
   render() {
-    const { phone, selectedOption, options } = this.state;
     return (
-      <form className="login-form-number">
-        <p>this is number</p>
-        <PhoneInput
-          country="us"
-          value={phone}
-          onChange={this.changePhone}
-          enableSearch="true"
-          required="true"
-          /*           buttonStyle={{ backgroundColor: 'white' }} */
-          /* dropdownStyle={{ height: '50px', backgroundColor: 'black' }} */
-        />
-        <Select
-          defaultValue={selectedOption}
-          onChange={this.setSelectedOption}
-          options={options}
-          isSearchable="true"
-          isClearable="true"
-        />
-        <CustomSelect />
+      <form className="login-form-number" onSubmit={this.sendForm}>
+        <p className="login-title">Mobile</p>
+        <div className="lfn__number-group">
+          <div className="lfn__custom-select">
+            <CustomSelect />
+          </div>
+          <input type="number" className="lfn__input-number login-input" />
+        </div>
+        <p className="login-title">Password</p>
+        <input type="password" className="lfn__input-password login-input" />
+        <button type="submit" className="login-button">
+          Log In
+        </button>
       </form>
     );
   }

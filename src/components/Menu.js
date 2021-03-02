@@ -7,7 +7,7 @@ const Menu = () => (
     <nav>
       <div className="main-nav container">
         <div className="App-logo-container">
-          <img src="./n.gif" className="App-logo" alt="App-logo" />
+          <img src="/n.gif" className="App-logo" alt="App-logo" />
           <h1>CroWenk</h1>
         </div>
         <ul>

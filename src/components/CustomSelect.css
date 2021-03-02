@@ -1,11 +1,12 @@
 .custom-select{
-    border: 1px solid var(--gray);
-    padding: .5rem;
-    border-radius: 2px;
-    color: var(--secondary-light-color);
+    border: 1px solid var(--secondary-color--70);
+    padding: .7rem .5rem;
+    border-radius: 4px;
+    color: var(--secondary-color--30);
     font-size: 1rem;
     cursor: pointer;
     position: relative;
+    width: 100%;
 }
 
 .custom-select:hover{
@@ -15,13 +16,22 @@
 
 
 .custom-select__chosen{
+    width: 100%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: .8rem;
 }
 
 .custom-select__chosen button {
     position: relative;
+    border-radius: 50%;
+    width: 20px;
     z-index: 100;
+    border: none;
 }
 
 .custom-select__chosen img,
@@ -35,32 +45,44 @@
     position: absolute;
     top: 35px;
     left: 0;
-    border:1px solid var(--gray);
+    border:1px solid var(--secondary-color--70);
     width: 350px;
 }
 
 .custom-select__content .custom-select__searcher{
+    position: relative;
     padding: .5rem;
     width: 100%;
-    border: 1px solid var(--gray);
-    background-color: var(--white);
+    border: 1px solid var(--secondary-color--70);
+    background-color: var(--white-color);
 }
+
+.custom-select__content .custom-select__searcher span{
+    color:var(--primary-color);
+    position:absolute;
+    top:15px;
+    right: 20px;
+}
+
 
 .custom-select__content .custom-select__searcher input{
     padding: .5rem;
     width: 100%;
+    outline: none;
+    border:0;
+    border:1px solid var(--primary-color);
 }
 
 .custom-select__content .custom-select__searcher input:focus{
     outline: none;
-    box-shadow: none;
+    box-shadow: 1px 1px 4px 1px var(--primary-color--70);
 }
 
 .custom-select__content .custom-select__list{
     height: 250px;
     position: relative;
     overflow-y: scroll;   
-    background-color: var(--white);
+    background-color: var(--white-color);
 }
 
 .custom-select__content li{
@@ -71,7 +93,7 @@
     flex: 1;
 }
 .custom-select__content li:hover{
-    background-color: var(--gray-light);
+    background-color: var(--primary-color--70);
 }
 
 .hidden{

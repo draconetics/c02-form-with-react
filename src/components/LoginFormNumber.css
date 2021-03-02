@@ -1,22 +1,10 @@
-.login-form-number .react-tel-input:hover{
-    box-shadow: 1px 1px 1px 1px #ffcc33;
-    border-radius: 3px;
+.login-form-number .lfn__number-group{
+    width: 100%;
+    display:flex;
 }
 
-.login-form-number .react-tel-input:hover input,
-.login-form-number .react-tel-input:hover .flag-dropdown{
-    
+.login-form-number .lfn__custom-select{
+    width: 180px;
+    margin-right: 10px;
 }
 
-.login-form-number .react-tel-input input{
-   
-}
-
-.login-form-number input:hover {
-
-}
-
-.login-form-number .flag-dropdown{
-    background-color: white;
-    justify-content: spa;
-}

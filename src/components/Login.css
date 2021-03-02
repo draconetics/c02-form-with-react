@@ -3,8 +3,9 @@
     width: 100%;
     padding: 50px 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-
+    align-items: center;
 }
 
 .login__container{
@@ -46,3 +47,94 @@
 .login__url span{
     color:#0ECB81;
 }
+.login__submenu{
+    display: flex;
+    border-bottom: 1px solid var(--secondary-color--50);
+    margin-bottom: 1rem;
+}
+
+.login__submenu a{
+    display:block;
+    margin-right: 1rem;
+    color: var(--secondary-color--30);
+    padding-top:1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid transparent;
+}
+
+.login__submenu a.active{
+    border-bottom: 2px solid var(--primary-color);
+    font-weight: 500;
+    
+}
+
+.login__links{
+    display: flex;
+    font-size: .8rem;
+    justify-content: space-around;
+}
+
+.login__links a{
+    color: var(--primary-color);
+    margin-right: 5px;
+}
+.login__links a:nth-child(1){
+    color:var(--secondary-color--30);
+    text-decoration: underline;
+    flex:1;
+}
+
+.login .login__clone{
+    margin-top: 2rem;
+}
+.login .login__clone a{
+    color: var(--primary-color)
+}
+
+/*******************GENERIC INPUT, TITLE AND BUTTON****************************/
+.login-input{
+    padding:.7rem;
+    border: 1px solid var(--secondary-color--70);
+    outline: none;
+    width: 100%;
+    border-radius: 4px;
+}
+
+.login-input:hover, .login-input:focus{
+    border: 1px solid var(--primary-color);
+}
+
+
+.login-title{
+    display: block;
+    width: 100%;
+    font-size: .8rem;
+    color: var(--secondary-color--30);
+    margin:20px 0 0 0;
+}
+
+.login-button{
+    padding: 1rem 0;
+    border:none;
+    width: 100%;
+    font-size: 1rem;
+    color: #000;
+    margin: 1rem 0;
+    background-image: linear-gradient(to right, #ffb347 0%, #ffcc33  51%, #ffb347  100%);
+    transition: .5s ease;
+    transition-property: box-shadow;
+    cursor: pointer;
+    outline: none;
+}
+
+.login-button:hover{
+    background-color: red;
+}
+
+.login-button:focus{
+    box-shadow: 1px 1px 1px 1px #ffcc33;
+}
+
+/**********************************************************/
+

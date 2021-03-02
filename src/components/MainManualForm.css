@@ -1,0 +1,93 @@
+.main-manual-form__header{
+    font-size: 3rem;
+    font-weight: 700;
+    background-color: var(--secondary-color--70);
+    padding-top:2.5rem;
+    padding-bottom: 2.5rem;
+    width: 100%;
+    text-align: center;
+    color: var(--white-color);
+}
+
+.main-manual-form__google{
+    
+    padding-top:3rem;
+    padding-bottom: 3rem;
+    width: 100%;
+}
+
+.main-manual-form__google-button{
+    background: rgb(249,50,50);
+    background: linear-gradient(180deg, rgba(249,50,50,1) 1%, rgba(145,46,46,1) 52%, rgba(148,9,9,1) 100%);
+    border: 1px solid var(--secondary-color);
+    width: 250px;
+    margin:0 auto;
+    display:flex;
+    color: var(--secondary-color--70);
+    font-size: .8rem;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+}
+.main-manual-form__google-button span{
+    padding: 1rem;
+    font-size: 1.2rem;
+    border-right:1px solid rgba(145,46,46,1);
+}
+
+.main-manual-form__google-button p{
+    padding: 1rem;
+    border-right:1px solid rgba(145,46,46,1);
+}
+/*************************OR line****************************/
+.main-manual-form__or{
+    margin:0 auto;
+    width: 85%;
+    height: 50px;
+    position: relative;
+}
+.main-manual-form__or p{
+    position: relative;
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    width: fit-content;
+    margin: 0 auto;
+    
+}
+
+.main-manual-form__or p::after{
+    content:"";
+    position: absolute;
+    top:25px;
+    left:65px;
+    border:1px solid var(--secondary-color--30);
+    height: 1px;
+    width: 450px;
+}
+
+.main-manual-form__or p::before{
+    content:"";
+    position: absolute;
+    top:25px;
+    left:-470px;
+    border:1px solid var(--secondary-color--30);
+    height: 1px;
+    width: 450px;
+}
+
+/*************************************content**************************************/
+.main-manul-form__register{
+    width: 100%;
+}
+/************************************************************/
+
+.main-manual-form__clone{
+    color: var(--white-color);
+    padding:2rem;
+    width: 100%;
+    text-align: center;
+    background-color: var(--secondary-color--50);
+}
+.main-manual-form__clone a{
+    color: var(--info-color)
+}

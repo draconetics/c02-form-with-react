@@ -7,20 +7,22 @@
 
 :root{
   /* #fba70b */
-  --primary-color: rgb(251, 167, 11);
+  --primary-color:#F0B90B;
+  --primary-color--70:#f0bb0b75;
+  ;
   /* #191a20 */
   --secondary-color: rgb(25, 26, 32);
   /* #888 */
-  --secondary-light-color: rgb(136, 136, 136);
+  --secondary-color--30: rgb(136, 136, 136);
+  --secondary-color--50: #C8C8C8;
+  --secondary-color--70: #ececec;
   /* #007bff */
   --info-color: rgb(0, 123, 255);
   /* #f4813f */
   --warning-color: rgb(244, 129, 63);
   /* #f1556a */
   --danger-color: rgb(241, 85, 106);
-  --white: rgb(255,255,255);
-  --gray: rgb(200,200,200);
-  --gray-light: #ececec;
+  --white-color: rgb(255,255,255); 
 }
 
 body {

@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAppStore, faBitcoin } from '@fortawesome/free-brands-svg-icons';
+import { faBitcoin } from '@fortawesome/free-brands-svg-icons';
 
 import './Home.css';
 
 export default class Home extends PureComponent {
   render() {
     return (
-      <div className="home container">
+      <div className="home">
         <h1>List of Forms</h1>
         <ul>
           <li>

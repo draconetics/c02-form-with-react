@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import data from './data';
 
 import './CustomSelect.css';
-
-const tmp = [
-  { id: 0, name: 'pedro', code: 'CA' },
-  { id: 1, name: 'juan', code: 'US' },
-  { id: 2, name: 'jhon', code: 'BO' },
-];
 
 export default class CustomSelect extends Component {
   constructor(props) {
@@ -20,9 +16,12 @@ export default class CustomSelect extends Component {
     };
     this.openSelect = this.openSelect.bind(this);
     this.setSelected = this.setSelected.bind(this);
+    this.setSearchText = this.setSearchText.bind(this);
+    this.customSelectReference = React.createRef();
   }
 
   componentDidMount() {
+    document.addEventListener('mousedown', this.listenerCustomSelect.bind(this));
     const list = [];
     for (const [key, value] of Object.entries(data)) {
       /* console.log(`${key}: ${value}`); */
@@ -34,31 +33,24 @@ export default class CustomSelect extends Component {
       list.push(item);
     }
 
-    this.setState({
-      ...this.state,
+    this.setState((prevState) => ({
+      ...prevState,
       list,
-    });
+    }));
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.listenerCustomSelect.bind(this));
   }
 
   setSelected(item) {
-    this.setState({
-      ...this.state,
-      selected: item,
-    });
-  }
-
-  openSelect() {
-    console.log('open');
-    const { isOpen } = this.state;
-    this.setState({
-      ...this.state,
-      isOpen: !isOpen,
-    });
-  }
-
-  reset(e) {
-    e.stopPropagation();
-    this.setSelected(null);
+    this.setState((prevState) => (
+      {
+        ...prevState,
+        selected: item,
+        isOpen: false,
+      }
+    ));
   }
 
   getSelected() {
@@ -66,63 +58,100 @@ export default class CustomSelect extends Component {
     if (selected) {
       return (
         <>
-          <img src={'./svgs/' + selected.codeName + '.svg'} alt={selected.name} />
+          <img
+            src={`/svgs/${selected.codeName}.svg`}
+            alt={selected.name}
+          />
           <p>{selected.code}</p>
           <button type="button" onClick={(e) => this.reset(e)}>
             x
           </button>
         </>
       );
-    } else {
-      return <p>Select ...</p>;
     }
+    return <p>Select ...</p>;
   }
 
   setSearchText(e) {
-    this.setState({
-      ...this.state,
-      searchText: e.target.value,
-    });
+    const { value = '' } = e.target; // <-- moved outside asynchronous context
+    if (value || value === '') {
+      console.log(value);
+      this.setState((prevState) => (
+        {
+          ...prevState,
+          searchText: value,
+        }
+      ));
+    } else {
+      console.log('no tiene value');
+    }
+  }
+
+  listenerCustomSelect(event) {
+    if (!this.customSelectReference.current
+      || this.customSelectReference.current.contains(event.target)) {
+      return;
+    }
+    this.setState((prevState) => ({
+      ...prevState,
+      isOpen: false,
+    }));
+  }
+
+  reset(e) {
+    e.stopPropagation();
+    this.setSelected(null);
+  }
+
+  openSelect() {
+    const { isOpen } = this.state;
+    this.setState((prevState) => (
+      {
+        ...prevState,
+        isOpen: !isOpen,
+      }
+    ));
   }
 
   isOpenSelect() {
     const { isOpen } = this.state;
     if (isOpen) {
       return 'custom-select__content';
-    } else {
-      return 'custom-select__content hidden';
     }
+    return 'custom-select__content hidden';
   }
 
   render() {
     const { list, searchText } = this.state;
-    const filteredList = list.filter((s) => {
-        console.log(s.name);
-        console.log(s.name.toUpperCase().indexOf(searchText));
-        return s.name.toUpperCase().indexOf(searchText.toUpperCase()) > -1;
-    });
+    const filteredList = list.filter((s) => (
+      s.name.toUpperCase().indexOf(searchText.toUpperCase()) > -1));
     return (
-      <ul className="custom-select">
+      <ul className="custom-select" ref={this.customSelectReference}>
         <li className="custom-select__chosen" onClick={this.openSelect}>
           {this.getSelected()}
         </li>
         <div className={this.isOpenSelect()}>
           <div className="custom-select__searcher">
             <input
-                name="searcher"
-                type="text"
-                onKeyUp={(e) => this.setSearchText(e)}
+              name="searcher"
+              type="text"
+              value={searchText}
+              onChange={this.setSearchText}
             />
+            <span><FontAwesomeIcon icon={faSearch} /></span>
           </div>
           <div className="custom-select__list">
-            {filteredList &&
-                filteredList.map((item) => (
+            {filteredList
+              && filteredList.map((item) => (
                 <li key={item.codeName} onClick={() => this.setSelected(item)}>
-                    <img src={'./svgs/' + item.codeName + '.svg'} alt={item.name} />
-                    <span>{item.name}</span>
-                    <p>{item.code}</p>
+                  <img
+                    src={`/svgs/${item.codeName}.svg`}
+                    alt={item.name}
+                  />
+                  <span>{item.name}</span>
+                  <p>{item.code}</p>
                 </li>
-                ))}
+              ))}
           </div>
         </div>
       </ul>

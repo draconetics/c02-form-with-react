@@ -8,6 +8,7 @@ import WidgetsForm from './components/WidgetsForm';
 import Login from './components/Login';
 
 import './App.css';
+import MainManualForm from './components/MainManualForm';
 
 function App() {
   return (
@@ -21,11 +22,9 @@ function App() {
           <Route exact path="/home">
             <Home />
           </Route>
-          <Route path="/login-form">
-            <Login />
-          </Route>
+          <Route path="/login-form" component={Login} />
           <Route path="/manual-form">
-            <ManualForm />
+            <MainManualForm />
           </Route>
           <Route path="/register-form">
             <RegisterForm />

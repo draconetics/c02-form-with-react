@@ -1,76 +1,67 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
+import { nanoid } from 'nanoid';
+import { validate, validateEmail } from './util';
+
+import './ManualForm.css';
 
 const FA = require('react-fontawesome');
 
 const ManualForm = () => {
   const inputInit = { value: '', touched: false, error: null };
+  const [username, setUsername] = useState(inputInit);
   const [firstName, setFirstName] = useState(inputInit);
   const [lastName, setLastName] = useState(inputInit);
   const [email, setEmail] = useState(inputInit);
-
-  const reset = () => {
-    setFirstName(inputInit);
-    setLastName(inputInit);
-    setEmail(inputInit);
-  };
-
-  const validateName = (firstNameInput) => {
-    if (firstNameInput.length <= 3) {
-      return 'First Name should be > 3 characters';
-    }
-    if (firstNameInput.length > 10) {
-      return 'First Name should be <= 10 characters';
-    }
-    return '';
-  };
-
-  const validateLastName = (lastNameInput) => {
-    if (lastNameInput.length < 3) {
-      return 'Last Name should be >= 3 characters';
-    }
-    if (lastNameInput.length > 10) {
-      return 'Last Name should be <= 10 characters';
-    }
-
-    return '';
-  };
-  const emailIsValid = (emailValue) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(emailValue);
-  const validateEmail = (emailInput) => {
-    if (emailInput.length === 0) {
-      console.log('return *');
-      return '(*)';
-    }
-    if (!emailIsValid(emailInput)) {
-      return 'Email is not valid';
-    }
-    return '';
-  };
+  const [password01, setPassword01] = useState(inputInit);
+  const [password02, setPassword02] = useState(inputInit);
+  const [errorList, setErrorList] = useState([]);
 
   const handleOnChange = (e) => {
     let error = '';
-    // console.log(e.target.value, e.target.value.length);
+    console.log(e.target.value, e.target.value.length);
     const inputName = e.target.name;
     const inputValue = e.target.value;
     switch (inputName) {
+      case 'username':
+        error = validate('username', inputValue, 10, 3);
+        setUsername({ ...username, value: inputValue, error });
+        break;
       case 'firstName':
-        error = validateName(inputValue);
+        error = validate('firstname', inputValue, 10, 3);
         setFirstName({ ...firstName, value: inputValue, error });
         break;
       case 'lastName':
-        error = validateLastName(inputValue);
+        error = validate('lastname', inputValue, 10, 3);
         setLastName({ ...lastName, value: inputValue, error });
         break;
       case 'email':
         error = validateEmail(inputValue);
         setEmail({ ...email, value: inputValue, error });
         break;
+      case 'password01':
+        error = validate('password', inputValue, 20, 5);
+        setPassword01({ ...password01, value: inputValue, error });
+        break;
+      case 'password02': {
+        error = validate('password', inputValue, 20, 5);
+        if(error === '') {
+          error = (password01.value === inputValue) ? '' : 'Passwords do not match';
+        }
+        console.log(password01.value + '  ' + inputValue);
+        console.log(error);
+        setPassword02({ ...password02, value: inputValue, error });
+        break;
+      }
       default:
     }
   };
 
   const onBlur = (e) => {
     switch (e.target.name) {
+      case 'username':
+        setUsername({ ...username, touched: true });
+        break;
       case 'firstName':
         setFirstName({ ...firstName, touched: true });
         break;
@@ -84,24 +75,19 @@ const ManualForm = () => {
     }
   };
 
-  const verifyForm = () => (firstName.error === '' && lastName.error === '' && email.error === ''
-    ? ''
-    : 'disabled');
-
   const getMessage = (inputName) => {
     if (inputName.error != null && inputName.error.length > 0) {
-      return <span className="text-danger">{`->${inputName.error}`}</span>;
+      return <FA className="times-icon" name="times" />;
     }
     if (inputName.error === '') {
       return (
         <span className="text-success">
-          {'->Correct!'}
-          <FA className="thumbs-up-icon" name="thumbs-up" />
+          <FA className="check-icon" name="check" />
         </span>
       );
     }
     if (inputName.touched) {
-      return <span className="text-danger">(*)</span>;
+      return <span className="text-danger">Required</span>;
     }
     return '';
   };
@@ -112,83 +98,135 @@ const ManualForm = () => {
     console.log(firstName);
     console.log(lastName);
     console.log(email);
-    if (verifyForm() === 'disabled') {
+    const list = [
+      username.error,
+      firstName.error,
+      lastName.error,
+      email.error,
+      password01.error,
+      password02.error,
+    ];
+    if (!username.value.trim()) list[0] = 'Username required';
+    if (!firstName.value.trim()) list[1] = 'firstname required';
+    if (!lastName.value.trim()) list[2] = 'lastname required';
+    if (!email.value.trim()) list[3] = 'email required';
+    if (!password01.value.trim()) list[4] = 'Password required';
+    if (!password02.value.trim()) list[5] = 'Repeat password';
+    console.log(list);
+    if (list[0] || list[1] || list[2] || list[3] || list[4] || list[5]) {
+      setErrorList(list);
       return;
     }
+    console.log(list);
+    console.log(username);
     console.log(firstName);
     console.log(lastName);
     console.log(email);
-    alert({ firstName, lastName, email });
+    console.log(password01);
+    console.log(password02);
+    alert('data sended!!');
   };
 
   return (
     <div>
-      <form className="form-container" onSubmit={(e) => onSubmit(e)}>
-        <h3>Simple Form Validation</h3>
-        <div className="form-group">
-          <label>
-            First Name
-            {getMessage(firstName)}
-          </label>
-
-          <input
-            className="form-control"
-            type="text"
-            name="firstName"
-            value={firstName.value}
-            onChange={(e) => handleOnChange(e)}
-            placeholder="First Name"
-            onBlur={(e) => onBlur(e)}
-          />
+      <form className="manual-form-register" onSubmit={(e) => onSubmit(e)}>
+        <CustomInput
+          label="Username"
+          type="text"
+          name="username"
+          inputValue={username}
+          handleOnChange={handleOnChange}
+          onBlur={onBlur}
+          getMessage={getMessage}
+        />
+        <CustomInput
+          label="First Name"
+          type="text"
+          name="firstName"
+          inputValue={firstName}
+          handleOnChange={handleOnChange}
+          onBlur={onBlur}
+          getMessage={getMessage}
+        />
+        <CustomInput
+          label="Last Name"
+          type="text"
+          name="lastName"
+          inputValue={lastName}
+          handleOnChange={handleOnChange}
+          onBlur={onBlur}
+          getMessage={getMessage}
+        />
+        <CustomInput
+          label="Email"
+          type="email"
+          name="email"
+          inputValue={email}
+          handleOnChange={handleOnChange}
+          onBlur={onBlur}
+          getMessage={getMessage}
+        />
+        <CustomInput
+          label="Password"
+          type="password"
+          name="password01"
+          inputValue={password01}
+          handleOnChange={handleOnChange}
+          onBlur={onBlur}
+          getMessage={getMessage}
+        />
+        <CustomInput
+          label="Repeat password"
+          type="password"
+          name="password02"
+          inputValue={password02}
+          handleOnChange={handleOnChange}
+          onBlur={onBlur}
+          getMessage={getMessage}
+        />
+        <div className="message-are">
+          {errorList
+            && errorList.map((error) => {
+              if (error !== '') {
+                return (
+                  <div
+                    key={nanoid()}
+                    className="manual-form-register__error"
+                  >
+                    {error}
+                  </div>
+                );
+              }
+              return null;
+            })}
         </div>
         <div className="form-group">
-          <label>
-            Last Name
-            {getMessage(lastName)}
-          </label>
-          <input
-            className="form-control"
-            type="text"
-            name="lastName"
-            value={lastName.value}
-            onChange={(e) => handleOnChange(e)}
-            placeholder="Last Name"
-            onBlur={(e) => onBlur(e)}
-          />
-        </div>
-        <div className="form-group">
-          <label>
-            Email
-            {getMessage(email)}
-          </label>
-          <input
-            className="form-control"
-            type="text"
-            name="email"
-            value={email.value}
-            onChange={(e) => handleOnChange(e)}
-            placeholder="Email"
-            onBlur={(e) => onBlur(e)}
-          />
-        </div>
-        <div className="form-group">
-          <button
-            type="submit"
-            className={`btn btn--primary ${verifyForm()}`}
-          >
-            Submit
-          </button>
-          <button
-            type="button"
-            className="btn btn--secondary"
-            onClick={() => reset()}
-          >
-            Reset
+          <button type="submit" className="manual-form-register__submit">
+            Register
           </button>
         </div>
       </form>
     </div>
   );
 };
+
+const CustomInput = ({
+  label, type, name, inputValue, handleOnChange, onBlur, getMessage,
+}) => (
+  <div className="form-group">
+    <label>
+      {label}
+      <FA className="info-circle-icon" name="info-circle" />
+    </label>
+    <input
+      type={type}
+      name={name}
+      value={inputValue.value}
+      onChange={(e) => handleOnChange(e)}
+      onBlur={(e) => onBlur(e)}
+    />
+    <div>{getMessage(inputValue)}</div>
+  </div>
+  );
 
 export default ManualForm;
