@@ -94,7 +94,8 @@
 
 /*******************GENERIC INPUT, TITLE AND BUTTON****************************/
 .login-input{
-    padding:.7rem;
+    padding:.7rem!important;
+    border:0;
     border: 1px solid var(--secondary-color--70);
     outline: none;
     width: 100%;
@@ -103,6 +104,8 @@
 
 .login-input:hover, .login-input:focus{
     border: 1px solid var(--primary-color);
+    box-shadow: none;
+    padding:.7rem!important;
 }
 
 
@@ -122,14 +125,17 @@
     color: #000;
     margin: 1rem 0;
     background-image: linear-gradient(to right, #ffb347 0%, #ffcc33  51%, #ffb347  100%);
-    transition: .5s ease;
-    transition-property: box-shadow;
+    background-size: 200% 100%;
+    background-repeat: repeat;
+    transition:all .5s ease;
+/*     transition-property: box-shadow, background-image; */
     cursor: pointer;
     outline: none;
 }
 
 .login-button:hover{
-    background-color: red;
+    background-repeat:repeat;
+    background-position: 100%;
 }
 
 .login-button:focus{

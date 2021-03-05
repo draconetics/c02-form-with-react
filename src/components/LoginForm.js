@@ -49,7 +49,7 @@ const renderField = ({
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...input}
       type={type}
-      className={(error) ? 'login-input danger' : 'form-input'}
+      className={(error) ? 'login-input danger' : 'login-input'}
     />
     {getMessage(touched, error)}
   </>

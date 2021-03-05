@@ -1,6 +1,6 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable no-restricted-syntax */
 import React from 'react';
-import data from './data';
 import CustomSelect from './CustomSelect';
 
 import './LoginFormNumber.css';
@@ -8,79 +8,127 @@ import './LoginFormNumber.css';
 export default class LoginFormNumber extends React.Component {
   constructor(props) {
     super(props);
+    this.default = {
+      value: '',
+      touch: false,
+      error: '',
+    };
     this.state = {
-      phone: '',
-      selectedOption: null,
-      options: [],
+      code: this.default,
+      phone: this.default,
+      password: this.default,
     };
-    this.changePhone = this.changePhone.bind(this);
-    this.setSelectedOption = this.setSelectedOption.bind(this);
-    this.sendForm = this.sendForm.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount() {
-    const list = [];
-    const style = {
-      display: 'flex',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-    };
-    const imageStyle = {
-      height: '20px',
-      width: '20px',
-    };
-    const nameStyle = {
-      flex: '1',
-    };
-    for (const [key, value] of Object.entries(data)) {
-      const item = {
-        value: value.name + value.code,
-        label: (
-          <div style={style}>
-            <img src={`${URL + key}.svg`} alt={value.name} style={imageStyle} />
-            <p style={nameStyle}>{`${value.name} ${value.code}`}</p>
-          </div>
-        ),
-      };
-      list.push(item);
+  handleChange(e) {
+    console.log(e);
+    let error = '';
+    const { name, value } = e.target;
+    switch (name) {
+      case 'code':
+        error = (value === null || value === '') ? 'Required Code' : '';
+        this.setState((prevState) => ({
+          ...prevState,
+          code: { ...prevState.code, value, touch: true, error },
+        }));
+        break;
+      case 'phone': {
+        error = (value && Number.isNaN(Number.parseInt(value, 10))) ? 'insert valid numbers' : '';
+        if (value.lenght === 0) {
+          error = 'Phone required';
+        }
+        this.setState((prevState) => ({
+          ...prevState,
+          phone: { ...prevState.phone, value, touch: true, error },
+        }));
+        break;
+      }
+      case 'password': {
+        if (value.lenght === 0) {
+          error = 'Password required';
+        }
+        this.setState((prevState) => ({
+          ...prevState,
+          password: { ...prevState.password, value, touch: true, error },
+        }));
+        break;
+      }
+      default:
     }
-    this.setState({ ...this.state, options: list });
   }
 
-  setSelectedOption(selectedOption) {
-    console.log(selectedOption);
-    this.setState({
-      ...this.state,
-      selectedOption,
-    });
-  }
-
-  changePhone(phone) {
-    this.setState(
-      (prev) => ({
-        ...prev,
-        phone,
-      }),
-    );
+  getMessage(inputValue) {
+    const { error } = inputValue;
+    if (error) {
+      return <span className="text-danger">{error}</span>;
+    }
+    return null;
   }
 
   sendForm(e) {
     e.preventDefault();
-    alert('send data');
+    const { code, phone, password } = this.state;
+    let errorCode = '';
+    let errorPhone = '';
+    let errorPassword = '';
+    if (code.value === '' || code.value === null) {
+      errorCode = 'Country Code Required';
+    }
+
+    if (phone.value === '' || phone.value === null) {
+      errorPhone = 'Phone Required';
+    }
+
+    if (password.value === '' || password.value === null) {
+      errorPassword = 'Password Required';
+    }
+
+    this.setState((prevState) => ({
+      ...prevState,
+      code: { ...prevState.code, error: errorCode },
+      phone: { ...prevState.phone, error: errorPhone },
+      password: { ...prevState.password, error: errorPassword },
+    }));
+
+    if (code.value && phone.value && password.value) {
+      alert('form filled correctly...')
+    }
+    return;
   }
 
   render() {
+    const { phone, code, password } = this.state;
     return (
-      <form className="login-form-number" onSubmit={this.sendForm}>
+      <form className="login-form-number" onSubmit={(e) => this.sendForm(e)}>
         <p className="login-title">Mobile</p>
         <div className="lfn__number-group">
           <div className="lfn__custom-select">
-            <CustomSelect />
+            <CustomSelect handleChange={this.handleChange} code={code} />
           </div>
-          <input type="number" className="lfn__input-number login-input" />
+          <input
+            type="number"
+            name="phone"
+            value={phone.value}
+            onChange={this.handleChange}
+            className="login-input"
+          />
+        </div>
+        <div className="login-form-number__message">
+          {this.getMessage(code)}
+          {this.getMessage(phone)}
         </div>
         <p className="login-title">Password</p>
-        <input type="password" className="lfn__input-password login-input" />
+        <input
+          type="password"
+          name="password"
+          value={password.value}
+          onChange={this.handleChange}
+          className="login-input"
+        />
+        <div className="login-form-number__message">
+          {this.getMessage(password)}
+        </div>
         <button type="submit" className="login-button">
           Log In
         </button>

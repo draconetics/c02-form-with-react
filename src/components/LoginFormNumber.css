@@ -1,3 +1,6 @@
+
+/* .login-input -> implemented on login.css */
+
 .login-form-number .lfn__number-group{
     width: 100%;
     display:flex;
@@ -8,3 +11,7 @@
     margin-right: 10px;
 }
 
+.login-form-number__message {
+    display: flex;
+    justify-content: space-between;
+}

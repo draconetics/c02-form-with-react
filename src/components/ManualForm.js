@@ -127,7 +127,8 @@ const ManualForm = () => {
     console.log(email);
     console.log(password01);
     console.log(password02);
-    alert('data sended!!');
+    const data = `${username.value},${firstName.value},${lastName.value},${email.value},${password01.value}`;
+    alert(data);
   };
 
   const onChange = (value) => {
@@ -237,6 +238,7 @@ const CustomInput = ({
       value={inputValue.value}
       onChange={(e) => handleOnChange(e)}
       onBlur={(e) => onBlur(e)}
+      autocomplete="off"
     />
     <div>{getMessage(inputValue)}</div>
   </div>

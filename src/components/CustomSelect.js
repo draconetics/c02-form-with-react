@@ -44,6 +44,9 @@ export default class CustomSelect extends Component {
   }
 
   setSelected(item) {
+    const { handleChange } = this.props;
+    const data = { name: 'code', value: item };
+    handleChange({ target: data });
     this.setState((prevState) => (
       {
         ...prevState,
@@ -137,6 +140,7 @@ export default class CustomSelect extends Component {
               type="text"
               value={searchText}
               onChange={this.setSearchText}
+              autocomplete="off"
             />
             <span><FontAwesomeIcon icon={faSearch} /></span>
           </div>
