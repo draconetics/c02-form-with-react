@@ -1,12 +1,14 @@
 /* eslint-disable class-methods-use-this */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import LoginForm from './LoginForm';
 import LoginFormNumber from './LoginFormNumber';
 
 import './Login.css';
 
-export default function Login({ match }) {
+export default function Login(props) {
+  const { match } = props;
   return (
     <div className="login">
       <div className="login__container">
@@ -39,3 +41,10 @@ export default function Login({ match }) {
     </div>
   );
 }
+
+const urlItem = {
+  url: PropTypes.string.isRequired,
+};
+Login.propTypes = {
+  match: PropTypes.shape(urlItem).isRequired,
+};

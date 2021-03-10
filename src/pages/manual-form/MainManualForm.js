@@ -45,7 +45,9 @@ export default function MainManualForm() {
           <ManualForm />
         </div>
         <p className="main-manual-form__clone">
-          cloned from : <a href="https://flixpress.com/register.aspx">flixpress.com</a>
+          cloned from :
+          {' '}
+          <a href="https://flixpress.com/register.aspx">flixpress.com</a>
         </p>
       </DivContent>
     </div>

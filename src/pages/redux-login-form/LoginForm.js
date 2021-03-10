@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
 
 import './LoginForm.css';
@@ -57,7 +57,7 @@ const renderField = ({
 
 // eslint-disable-next-line import/no-mutable-exports
 let LoginForm = ({
-  handleSubmit, pristine, invalid,
+  handleSubmit,
 }) => {
   const [showPassword, setShowPassword] = React.useState(false);
   const togglePassword = () => {
@@ -88,6 +88,11 @@ let LoginForm = ({
     </form>
   );
 };
+
+LoginForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+};
+
 LoginForm = reduxForm({
   form: 'loginForm',
   validate,

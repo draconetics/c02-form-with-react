@@ -2,8 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import DropdownList from 'react-widgets/lib/DropdownList';
-import { SelectList, Multiselect } from 'react-widgets';
+import PropTypes from 'prop-types';
 import DatePicker, {
   FieldDatePicker,
   formatDates,
@@ -13,38 +12,7 @@ import { multiFields, inputComponent } from './MultiSelect';
 
 import 'react-widgets/dist/css/react-widgets.css';
 
-const colors = [
-  { color: 'Red', value: 'ff0000' },
-  { color: 'Green', value: '00ff00' },
-  { color: 'Blue', value: '0000ff' },
-];
-
-const renderDropdownList = ({
-  input, data, valueField, textField,
-}) => (
-  <DropdownList
-    {...input}
-    data={data}
-    valueField={valueField}
-    textField={textField}
-    onChange={input.onChange}
-  />
-);
-
-const renderMultiselect = ({
-  input, data, valueField, textField,
-}) => (
-  <Multiselect
-    {...input}
-    onBlur={() => input.onBlur()}
-    value={input.value || []} // requires value to be an array
-    data={data}
-    valueField={valueField}
-    textField={textField}
-  />
-);
-
-const renderDateTimePicker = ({ input: { onChange, value }, showTime }) => (
+const renderDateTimePicker = () => (
   <div>
     this is date picker
   </div>
@@ -88,6 +56,13 @@ const WidgetsForm = (props) => {
       </div>
     </form>
   );
+};
+
+WidgetsForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
+  reset: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
 };
 
 export default reduxForm({

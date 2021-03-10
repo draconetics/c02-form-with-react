@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useMemo } from 'react';
-import { Field, reduxForm, SubmissionError } from 'redux-form';
+import PropTypes from 'prop-types';
+import { Field, reduxForm } from 'redux-form';
 import countryList from 'react-select-country-list';
 
 const validate = ({
@@ -111,6 +112,13 @@ const RegisterForm = (props) => {
       </div>
     </form>
   );
+};
+
+RegisterForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
+  reset: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
 };
 
 export default reduxForm({

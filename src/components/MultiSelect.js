@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -12,7 +13,7 @@ export const multiFields = [
   { label: 'Ethical', value: 'ETHICAL' },
 ];
 
-export const inputComponent = ({ values, onSelect, input }) => (
+export const inputComponent = ({ values, input }) => (
   <MultiSelect
     {...input}
     values={values}
@@ -35,7 +36,7 @@ const addToMultiSelect = (selected, newItem, cb) => {
 };
 
 const MultiSelect = ({
-  values, onSelect, currents, center, input,
+  values, onSelect, currents,
 }) => (
   <div>
     <div>
@@ -72,14 +73,8 @@ MultiSelect.propTypes = {
   values: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      value: PropTypes.any.isRequired,
+      value: PropTypes.arrayOf.isRequired,
     }),
   ).isRequired,
-  center: PropTypes.bool,
-  currents: PropTypes.string,
-};
-
-MultiSelect.defaultProps = {
-  currents: '[]',
-  center: false,
+  currents: PropTypes.string.isRequired,
 };

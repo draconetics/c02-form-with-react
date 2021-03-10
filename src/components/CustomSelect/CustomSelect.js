@@ -1,7 +1,9 @@
+/* eslint-disable no-restricted-syntax */
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import data from './data';
+import PropTypes from 'prop-types';
+import data from '../../data/data';
 
 import './CustomSelect.css';
 
@@ -22,21 +24,7 @@ export default class CustomSelect extends Component {
 
   componentDidMount() {
     document.addEventListener('mousedown', this.listenerCustomSelect.bind(this));
-    const list = [];
-    for (const [key, value] of Object.entries(data)) {
-      /* console.log(`${key}: ${value}`); */
-      const item = {
-        codeName: key,
-        name: value.name,
-        code: value.code,
-      };
-      list.push(item);
-    }
-
-    this.setState((prevState) => ({
-      ...prevState,
-      list,
-    }));
+    this.initCountryList();
   }
 
   componentWillUnmount() {
@@ -45,8 +33,8 @@ export default class CustomSelect extends Component {
 
   setSelected(item) {
     const { handleChange } = this.props;
-    const data = { name: 'code', value: item };
-    handleChange({ target: data });
+    const newItem = { name: 'code', value: item };
+    handleChange({ target: newItem });
     this.setState((prevState) => (
       {
         ...prevState,
@@ -124,13 +112,35 @@ export default class CustomSelect extends Component {
     return 'custom-select__content hidden';
   }
 
+  initCountryList() {
+    const list = [];
+    for (const [key, value] of Object.entries(data)) {
+      /* console.log(`${key}: ${value}`); */
+      const item = {
+        codeName: key,
+        name: value.name,
+        code: value.code,
+      };
+      list.push(item);
+    }
+
+    this.setState((prevState) => ({
+      ...prevState,
+      list,
+    }));
+  }
+
   render() {
     const { list, searchText } = this.state;
     const filteredList = list.filter((s) => (
       s.name.toUpperCase().indexOf(searchText.toUpperCase()) > -1));
     return (
       <ul className="custom-select" ref={this.customSelectReference}>
-        <li className="custom-select__chosen" onClick={this.openSelect}>
+        <li
+          className="custom-select__chosen"
+          onClick={this.openSelect}
+          onKeyDown={() => {}}
+        >
           {this.getSelected()}
         </li>
         <div className={this.isOpenSelect()}>
@@ -140,14 +150,18 @@ export default class CustomSelect extends Component {
               type="text"
               value={searchText}
               onChange={this.setSearchText}
-              autocomplete="off"
+              autoComplete="off"
             />
             <span><FontAwesomeIcon icon={faSearch} /></span>
           </div>
           <div className="custom-select__list">
             {filteredList
               && filteredList.map((item) => (
-                <li key={item.codeName} onClick={() => this.setSelected(item)}>
+                <li
+                  key={item.codeName}
+                  onKeyDown={() => {}}
+                  onClick={() => this.setSelected(item)}
+                >
                   <img
                     src={`/svgs/${item.codeName}.svg`}
                     alt={item.name}
@@ -162,3 +176,7 @@ export default class CustomSelect extends Component {
     );
   }
 }
+
+CustomSelect.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+};

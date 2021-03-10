@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-restricted-syntax */
 import React from 'react';
-import CustomSelect from './CustomSelect';
+import CustomSelect from '../../components/CustomSelect/CustomSelect';
 
 import './LoginFormNumber.css';
 
@@ -30,7 +30,9 @@ export default class LoginFormNumber extends React.Component {
         error = (value === null || value === '') ? 'Required Code' : '';
         this.setState((prevState) => ({
           ...prevState,
-          code: { ...prevState.code, value, touch: true, error },
+          code: {
+            ...prevState.code, value, touch: true, error,
+          },
         }));
         break;
       case 'phone': {
@@ -40,7 +42,9 @@ export default class LoginFormNumber extends React.Component {
         }
         this.setState((prevState) => ({
           ...prevState,
-          phone: { ...prevState.phone, value, touch: true, error },
+          phone: {
+            ...prevState.phone, value, touch: true, error,
+          },
         }));
         break;
       }
@@ -50,7 +54,9 @@ export default class LoginFormNumber extends React.Component {
         }
         this.setState((prevState) => ({
           ...prevState,
-          password: { ...prevState.password, value, touch: true, error },
+          password: {
+            ...prevState.password, value, touch: true, error,
+          },
         }));
         break;
       }
@@ -92,9 +98,8 @@ export default class LoginFormNumber extends React.Component {
     }));
 
     if (code.value && phone.value && password.value) {
-      alert('form filled correctly...')
+      alert('form filled correctly...');
     }
-    return;
   }
 
   render() {

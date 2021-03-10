@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import PropTypes from 'prop-types';
 import {
   required, maxLength15, number, minValue18, email, tooOld, aol,
 } from './util';
@@ -58,6 +59,13 @@ const FieldLevelValidationForm = ({
     </div>
   </form>
 );
+
+FieldLevelValidationForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool.isRequired,
+  reset: PropTypes.func.isRequired,
+};
 
 export default reduxForm({
   form: 'fieldLevelValidation', // a unique identifier for this form

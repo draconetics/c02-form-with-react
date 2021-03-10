@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
-import ReCAPTCHA from "react-google-recaptcha";
+import ReCAPTCHA from 'react-google-recaptcha';
+import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
-import { validate, validateEmail } from './util';
+import { validate, validateEmail } from '../../components/util';
 
 import './ManualForm.css';
 
@@ -238,10 +239,23 @@ const CustomInput = ({
       value={inputValue.value}
       onChange={(e) => handleOnChange(e)}
       onBlur={(e) => onBlur(e)}
-      autocomplete="off"
+      autoComplete="off"
     />
     <div>{getMessage(inputValue)}</div>
   </div>
-  );
+);
+
+const input = {
+  value: PropTypes.string.isRequired,
+};
+CustomInput.propTypes = {
+  label: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  inputValue: PropTypes.arrayOf(PropTypes.shape(input)).isRequired,
+  handleOnChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
+  getMessage: PropTypes.func.isRequired,
+};
 
 export default ManualForm;

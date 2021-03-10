@@ -1,14 +1,13 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import Menu from './components/Menu';
-import Home from './components/Home';
-import ManualForm from './components/ManualForm';
+import Menu from './components/MenuComponent/Menu';
+import Home from './pages/home/Home';
 import RegisterForm from './components/RegisterForm';
 import WidgetsForm from './components/WidgetsForm';
-import Login from './components/Login';
+import Login from './pages/redux-login-form/Login';
+import MainManualForm from './pages/manual-form/MainManualForm';
 
 import './App.css';
-import MainManualForm from './components/MainManualForm';
 
 function App() {
   return (
@@ -16,12 +15,7 @@ function App() {
       <div className="App">
         <Menu />
         <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/home">
-            <Home />
-          </Route>
+          <Route exact path={['/', '/home']} component={Home} />
           <Route path="/login-form" component={Login} />
           <Route path="/manual-form">
             <MainManualForm />
